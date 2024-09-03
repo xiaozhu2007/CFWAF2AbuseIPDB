@@ -105,12 +105,12 @@ def report_bad_ip(it):
     }
     r=requests.post(url=url, headers=headers, params=params)
     if r.status_code==200:
-      print("Reported IP:",it['clientIP'])
+      print("Reported IP:", it['clientIP'])
     else:
       if r.status_code==429:
-        break
+        print("Error while reporting IP (429): ", it['clientIP'])
       else:
-        print("Error status:",r.status_code)
+        print("Error status:", r.status_code)
     decodedResponse = json.loads(r.text)
     print(json.dumps(decodedResponse, sort_keys=True, indent=4))
   except Exception as e:
