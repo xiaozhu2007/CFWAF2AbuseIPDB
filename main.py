@@ -82,7 +82,7 @@ def get_blocked_ip():
 def get_comment(it):
   return f"""IP: {it['clientIP']} [Country: {it['clientCountryName']}] triggered WAF ({it['source']}).
   Action: {it['action']}
-  ASN: {it['clientAsn']}
+  ASN: {it['clientAsn']} ({it['clientASNDescription']})
   Protocol: {it['clientRequestHTTPProtocol']} (method {it['clientRequestHTTPMethodName']})
   Endpoint: {it['clientRequestPath']}{it['clientRequestQuery']}
   Time: {it['datetime']}
