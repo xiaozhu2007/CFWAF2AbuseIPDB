@@ -80,7 +80,7 @@ def get_blocked_ip():
     get_blocked_ip()
 
 def get_comment(it):
-  return f"""IP:{it['clientIP']} [Country: {it['clientCountryName']}] triggered Cloudflare WAF ({it['source']}).
+  return f"""IP: {it['clientIP']} [Country: {it['clientCountryName']}] triggered WAF ({it['source']}).
   Action: {it['action']}
   ASN: {it['clientAsn']}
   Protocol: {it['clientRequestHTTPProtocol']} (method {it['clientRequestHTTPMethodName']})
