@@ -40,7 +40,7 @@ PAYLOAD={
   "variables": {
     "zoneTag": CLOUDFLARE_ZONE_ID,
     "filter": {
-      "datetime_geq": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.localtime(time.time()-60*60*8-60*60*2.5)),
+      "datetime_geq": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.localtime(time.time()-60*60*8-60*60*4)),
       "datetime_leq": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.localtime(time.time()-60*60*8)),
       # "OR":[{"action": "block"}, {"action": "managed_challenge"}, {"action": "jschallenge"}],
       "AND":[
@@ -124,7 +124,7 @@ print(str(type(a)))
 if str(type(a)) == "<class 'dict'>" and len(a)>0:
   ip_bad_list=a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
   print(len(ip_bad_list))
-  # print(a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"][0])
+  print(a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"][0])
   # {'action': 'managed_challenge', 'clientASNDescription': 'BABBAR-AS', 'clientAsn': '210743', 'clientCountryName': 'FR', 'clientIP': '154.54.249.200', 'clientRequestHTTPHost': 'blog.mhuig.top', 'clientRequestHTTPMethodName': 'GET', 'clientRequestHTTPProtocol': 'HTTP/1.1', 'clientRequestPath': '/robots.txt', 'clientRequestQuery': '', 'datetime': '2022-04-20T13:06:49Z', 'rayName': '6fee19707fd03afb', 'ruleId': '8ef3496625dc456b899f3497ccedcd50', 'source': 'firewallrules', 'userAgent':'Mozilla/5.0 (compatible; Barkrowler/0.9; +https://babbar.tech/crawler)'}
 
   reported_ip_list=[]
