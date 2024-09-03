@@ -125,7 +125,7 @@ a=get_blocked_ip()
 print(str(type(a)))
 if str(type(a)) == "<class 'dict'>" and len(a)>0:
   ip_bad_list=a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
-  print("Bad IP to report:" + len(ip_bad_list))
+  print("Bad IP to report:" + str(len(ip_bad_list)))
   
   reported_ip_list=[]
   for i in ip_bad_list:
@@ -134,5 +134,5 @@ if str(type(a)) == "<class 'dict'>" and len(a)>0:
         report_bad_ip(i)
         reported_ip_list.append(i['clientIP'])
 
-  print("Reported IP:" + len(reported_ip_list))
+  print("Reported IP:" + str(len(reported_ip_list)))
 print("==================== End ====================")
