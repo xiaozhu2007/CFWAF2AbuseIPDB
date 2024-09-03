@@ -105,9 +105,12 @@ def report_bad_ip(it):
     }
     r=requests.post(url=url, headers=headers, params=params)
     if r.status_code==200:
-      print("reported:",it['clientIP'])
+      print("Reported IP:",it['clientIP'])
     else:
-      print("error:",r.status_code)
+      if r.status_code==429:
+        break
+      else:
+        print("Error status:",r.status_code)
     decodedResponse = json.loads(r.text)
     print(json.dumps(decodedResponse, sort_keys=True, indent=4))
   except Exception as e:
@@ -117,16 +120,13 @@ def report_bad_ip(it):
 excepted_ruleId = ["fa01280809254f82978e827892db4e46"]
 
 print("==================== Start ====================")
-print(str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
 print(str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()-60*60*8))))
 a=get_blocked_ip()
 print(str(type(a)))
 if str(type(a)) == "<class 'dict'>" and len(a)>0:
   ip_bad_list=a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
-  print(len(ip_bad_list))
-  print(a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"][0])
-  # {'action': 'managed_challenge', 'clientASNDescription': 'BABBAR-AS', 'clientAsn': '210743', 'clientCountryName': 'FR', 'clientIP': '154.54.249.200', 'clientRequestHTTPHost': 'blog.mhuig.top', 'clientRequestHTTPMethodName': 'GET', 'clientRequestHTTPProtocol': 'HTTP/1.1', 'clientRequestPath': '/robots.txt', 'clientRequestQuery': '', 'datetime': '2022-04-20T13:06:49Z', 'rayName': '6fee19707fd03afb', 'ruleId': '8ef3496625dc456b899f3497ccedcd50', 'source': 'firewallrules', 'userAgent':'Mozilla/5.0 (compatible; Barkrowler/0.9; +https://babbar.tech/crawler)'}
-
+  print("Bad IP to report:" + len(ip_bad_list))
+  
   reported_ip_list=[]
   for i in ip_bad_list:
     if i['ruleId'] not in excepted_ruleId:
@@ -134,5 +134,5 @@ if str(type(a)) == "<class 'dict'>" and len(a)>0:
         report_bad_ip(i)
         reported_ip_list.append(i['clientIP'])
 
-  print(len(reported_ip_list))
+  print("Reported IP:" + len(reported_ip_list))
 print("==================== End ====================")
