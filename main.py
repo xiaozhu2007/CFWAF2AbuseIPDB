@@ -43,7 +43,7 @@ PAYLOAD = {
         "filter": {
             "datetime_geq": time.strftime(
                 "%Y-%m-%dT%H:%M:%SZ",
-                time.localtime(time.time() - 60 * 60 * 4),
+                time.localtime(time.time() - 60 * 60 * 4.5),
             ),
             "datetime_leq": time.strftime(
                 "%Y-%m-%dT%H:%M:%SZ", time.localtime(time.time())
@@ -73,15 +73,7 @@ headers = {
     "X-Auth-Email": CLOUDFLARE_EMAIL,
 }
 
-ttl = 60
-
-
 def get_blocked_ip():
-    global ttl
-    ttl = ttl - 1
-    print("ttl:", ttl)
-    if ttl <= 0:
-        return []
     try:
         r = requests.post(
             "https://api.cloudflare.com/client/v4/graphql/",
@@ -145,7 +137,6 @@ def report_bad_ip(it):
 excepted_ruleId = ["9b9dc6522cb14b0e98e4f841e8242abd"]
 
 print("==================== Start ====================")
-# print(str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()-60*60*8))))
 a = get_blocked_ip()
 print(str(type(a)))
 if str(type(a)) == "<class 'dict'>" and len(a) > 0:
