@@ -9,7 +9,7 @@ on:
 jobs:
   report:
     runs-on: ubuntu-latest
-    env:
+    #env:
       # TZ: Asia/Shanghai
     steps:
     - name: Checkout
