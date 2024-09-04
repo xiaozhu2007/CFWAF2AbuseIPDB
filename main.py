@@ -73,6 +73,7 @@ headers = {
     "X-Auth-Email": CLOUDFLARE_EMAIL,
 }
 
+
 def get_blocked_ip():
     try:
         r = requests.post(
@@ -108,17 +109,20 @@ def report_bad_ip(it):
             "categories": "13,21",
             "comment": get_comment(it),
         }
-        if it['source'] == 'l7ddos':
+        if it["source"] == "l7ddos":
             params["categories"] = "4,10,21"
-        if it['source'] == 'firewallCustom':
+        if it["source"] == "firewallCustom":
             params["categories"] = "18,19,21"
-        if it['source'] == 'asn':
+        if it["source"] == "asn":
             params["categories"] = "18,21"
-        if it['source'] == 'securitylevel':
+        if it["source"] == "securitylevel":
             params["categories"] = "21"
-        if it['clientCountryName'] == 'T1': # Tor
+        if it["clientCountryName"] == "T1":  # Tor
             params["categories"] = "4,9,10,13,18,19,21"
-        headers = {"Accept": "application/json", "Key": random.choice(ABUSEIPDB_API_KEYS.split(','))}
+        headers = {
+            "Accept": "application/json",
+            "Key": random.choice(ABUSEIPDB_API_KEYS.split(",")),
+        }
         r = requests.post(url=url, headers=headers, params=params)
         if r.status_code == 200:
             print("Reported IP:", it["clientIP"])
@@ -138,11 +142,9 @@ excepted_ruleId = ["9b9dc6522cb14b0e98e4f841e8242abd"]
 
 print("==================== Start ====================")
 a = get_blocked_ip()
-print(str(type(a)))
 if str(type(a)) == "<class 'dict'>" and len(a) > 0:
     ip_bad_list = a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
     print("Bad IP to report: " + str(len(ip_bad_list)))
-
     reported_ip_list = []
     for i in ip_bad_list:
         if i["ruleId"] not in excepted_ruleId:
