@@ -116,6 +116,16 @@ def report_bad_ip(it):
             "categories": "13,21",
             "comment": get_comment(it),
         }
+        if it['source'] == 'l7ddos':
+            params["categories"] = "4,10,21"
+        if it['source'] == 'firewallCustom':
+            params["categories"] = "18,19,21"
+        if it['source'] == 'asn':
+            params["categories"] = "18,21"
+        if it['source'] == 'securitylevel':
+            params["categories"] = "21"
+        if it['clientCountryName'] == 'T1': # Tor
+            params["categories"] = "4,9,10,13,18,19,21"
         headers = {"Accept": "application/json", "Key": random.choice(ABUSEIPDB_API_KEYS.split(','))}
         r = requests.post(url=url, headers=headers, params=params)
         if r.status_code == 200:
