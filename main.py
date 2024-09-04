@@ -43,10 +43,10 @@ PAYLOAD = {
         "filter": {
             "datetime_geq": time.strftime(
                 "%Y-%m-%dT%H:%M:%SZ",
-                time.localtime(time.time() - 60 * 60 * 8 - 60 * 60 * 4),
+                time.localtime(time.time() - 60 * 60 * 4),
             ),
             "datetime_leq": time.strftime(
-                "%Y-%m-%dT%H:%M:%SZ", time.localtime(time.time() - 60 * 60 * 8)
+                "%Y-%m-%dT%H:%M:%SZ", time.localtime(time.time())
             ),
             # "OR":[{"action": "block"}, {"action": "managed_challenge"}, {"action": "jschallenge"}],
             "AND": [
@@ -135,13 +135,13 @@ def report_bad_ip(it):
                 print("Error while reporting IP (429): ", it["clientIP"])
             else:
                 print("Error status:", r.status_code)
-        decodedResponse = json.loads(r.text)
-        print(json.dumps(decodedResponse, sort_keys=True, indent=4))
+        # decodedResponse = json.loads(r.text)
+        # print(json.dumps(decodedResponse, sort_keys=True, indent=4))
     except Exception as e:
         print("error:", e)
 
 
-# 排除配置错误的规则
+# 排除规则
 excepted_ruleId = ["9b9dc6522cb14b0e98e4f841e8242abd"]
 
 print("==================== Start ====================")
@@ -150,7 +150,7 @@ a = get_blocked_ip()
 print(str(type(a)))
 if str(type(a)) == "<class 'dict'>" and len(a) > 0:
     ip_bad_list = a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
-    print("Bad IP to report:" + str(len(ip_bad_list)))
+    print("Bad IP to report: " + str(len(ip_bad_list)))
 
     reported_ip_list = []
     for i in ip_bad_list:
@@ -159,5 +159,5 @@ if str(type(a)) == "<class 'dict'>" and len(a) > 0:
                 report_bad_ip(i)
                 reported_ip_list.append(i["clientIP"])
 
-    print("Reported IP:" + str(len(reported_ip_list)))
+    print("Reported IP: " + str(len(reported_ip_list)))
 print("==================== End ====================")
