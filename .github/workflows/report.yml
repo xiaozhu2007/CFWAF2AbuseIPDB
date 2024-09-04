@@ -10,7 +10,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     env:
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
     steps:
     - name: Checkout
       uses: actions/checkout@v4
