@@ -3,11 +3,12 @@ import requests
 import time
 import os
 import sys
+import random
 
 CLOUDFLARE_ZONE_ID = sys.argv[1]
 CLOUDFLARE_EMAIL = sys.argv[2]
 CLOUDFLARE_API_KEY = sys.argv[3]
-ABUSEIPDB_API_KEY = sys.argv[4]
+ABUSEIPDB_API_KEYS = sys.argv[4]
 
 PAYLOAD = {
     "query": """query ListFirewallEvents($zoneTag: string, $filter: FirewallEventsAdaptiveFilter_InputObject) {
@@ -115,7 +116,7 @@ def report_bad_ip(it):
             "categories": "13,21",
             "comment": get_comment(it),
         }
-        headers = {"Accept": "application/json", "Key": ABUSEIPDB_API_KEY}
+        headers = {"Accept": "application/json", "Key": random.choice(ABUSEIPDB_API_KEYS.split(','))}
         r = requests.post(url=url, headers=headers, params=params)
         if r.status_code == 200:
             print("Reported IP:", it["clientIP"])
