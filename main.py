@@ -136,13 +136,14 @@ def report_bad_ip(it):
     except Exception as e:
         print("error:", e)
 
-excepted_ruleId = ["abab"]
+excepted_ruleId = ["9b9dc6522cb14b0e98e4f841e8242abd"]
 
 print("==================== Start ====================")
 a = get_blocked_ip()
 if str(type(a)) == "<class 'dict'>" and len(a) > 0:
     ip_bad_list = a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
-    print("Bad IP to report: " + str(len(ip_bad_list)))
+    print("Bad IP num to report: " + str(len(ip_bad_list)))
+    print(ip_bad_list)
     reported_ip_list = []
     for i in ip_bad_list:
         if i["ruleId"] not in excepted_ruleId:
