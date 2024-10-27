@@ -143,9 +143,9 @@ a = get_blocked_ip()
 if str(type(a)) == "<class 'dict'>" and len(a) > 0:
     ip_bad_list = a["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
     print("Bad IP num to report: " + str(len(ip_bad_list)))
-    print(ip_bad_list)
     reported_ip_list = []
     for i in ip_bad_list:
+        print("Bad IP to report: " + str(i["clientIP"]))
         if i["ruleId"] not in excepted_ruleId:
             if i["clientIP"] not in reported_ip_list:
                 report_bad_ip(i)
