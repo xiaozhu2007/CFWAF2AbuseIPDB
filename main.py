@@ -136,7 +136,7 @@ def report_bad_ip(it):
     except Exception as e:
         print("error:", e)
 
-excepted_ruleId = ["9b9dc6522cb14b0e98e4f841e8242abd"]
+excepted_ruleId = ["abab"]
 
 print("==================== Start ====================")
 a = get_blocked_ip()
