@@ -99,8 +99,7 @@ def report_ip_to_abuseipdb(event: Dict):
     }
     response = requests.post("https://api.abuseipdb.com/api/v2/report", headers=headers, params=params)
     if response.status_code == 200:
-        print(f"[DEBUG] Reported IP: {event['clientIP']}")
-        print(response.json()['data']['abuseConfidenceScore'])
+        print(f"[DEBUG] Reported IP: {event['clientIP']} scores {response.json()['data']['abuseConfidenceScore']}")
     elif response.status_code == 429:
         print(f"Error while reporting IP (429): {event['clientIP']}")
     else:
