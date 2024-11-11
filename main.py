@@ -18,7 +18,7 @@ query ListFirewallEvents($zoneTag: string, $filter: FirewallEventsAdaptiveFilter
     zones(filter: { zoneTag: $zoneTag }) {
       firewallEventsAdaptive(
         filter: $filter
-        limit: 100000
+        limit: 10000
         orderBy: [datetime_DESC]
       ) {
         action
